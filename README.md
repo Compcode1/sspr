@@ -80,7 +80,7 @@ tenant-wide policy replication:
    on the mobile app authentication challenge screen.
 ================================================================================
 
-================================================================================
+
 LAB COMPLETION SUMMARY: SELF-SERVICE PASSWORD RESET (SSPR) GATE
 ================================================================================
 

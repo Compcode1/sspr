@@ -79,3 +79,53 @@ tenant-wide policy replication:
 7. Verify that Alpha cleanly bypasses the initial block page and successfully lands 
    on the mobile app authentication challenge screen.
 ================================================================================
+
+================================================================================
+LAB COMPLETION SUMMARY: SELF-SERVICE PASSWORD RESET (SSPR) GATE
+================================================================================
+
+1. DIRECTORY CONTAINER AND TARGET SETUP
+--------------------------------------------------------------------------------
+To control the scope of the self-remediation pipeline, a dedicated boundary group 
+was established within Microsoft Entra ID (MEID):
+
+* Static Pilot Group: SSPR-Pilot-Group
+* Alpha Engineer (Source): Manually added as a direct member of SSPR-Pilot-Group. 
+  Alpha represents the authorized remediation pathway.
+* Bravo Engineer (Source): Explicitly omitted from SSPR-Pilot-Group. Bravo 
+  represents the unauthorized/unscoped pathway.
+
+2. SYSTEM CONVERGENCE CONFIGURATION
+--------------------------------------------------------------------------------
+Two integrated configuration blades were updated inside the Entra ID admin portal 
+to drop the security gate:
+
+* SSPR Properties Blade:
+  - Configuration Path: Entra ID > Password reset > Properties.
+  - Enforcement Toggle: Set to "Selected".
+  - Scope Assignment: Bound explicitly to "SSPR-Pilot-Group".
+
+* Global Authentication Methods Policy:
+  - Configuration Path: Entra ID > Authentication methods > Policies > Microsoft Authenticator.
+  - Target Assignment: Configured to target the specific group "SSPR-Pilot-Group".
+  - SSPR Requirement: Set to "2" methods, enforcing both Mobile App Notification 
+    and Mobile App Code verification constraints.
+
+3. WHY THIS CONFIGURATION WORKS
+--------------------------------------------------------------------------------
+The MEID identity engine evaluates self-service recovery tracking requests at the 
+absolute front door before exposing authentication challenges:
+
+* The Failure State (Bravo Blocked): When Bravo Engineer (Source) hits the portal, 
+  the engine runs a policy check against the "Password reset" properties list. 
+  Because Bravo's identity is missing from SSPR-Pilot-Group, the engine returns a 
+  hard boolean negative. The portal immediately cuts the session, completely 
+  blocking access to the recovery pipeline and throwing an explicit "password 
+  reset isn’t turned on for your account" error.
+
+* The Success State (Alpha Allowed): When Alpha Engineer (Source) hits the portal, 
+  the engine verifies that Alpha belongs to SSPR-Pilot-Group. The block gate lifts, 
+  and the engine passes the session to the second phase. Alpha is permitted to satisfy 
+  the mandatory two-step mobile application MFA validation steps, resulting in a 
+  successful write-back password modification.
+================================================================================

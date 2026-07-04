@@ -71,7 +71,7 @@ tenant-wide policy replication:
 
 1. Open a fresh private Incognito browser window.
 2. Navigate directly to the recovery URL: https://passwordreset.microsoftonline.com
-3. Input Bravo Engineer's User Principal Name, complete the captcha, and click Next.
+3. Input Bravo Engineer's User Principal Name, complete the captcha, and click Next.  
 4. Verify the gateway throws an immediate block message indicating "You cannot 
    reset your own password because password reset isn't turned on for your account."
 5. Close the window, open a new private window, and navigate back to the recovery URL.

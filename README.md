@@ -25,15 +25,14 @@ Step 1: Create the Scoped Pilot Container
   - Click "Members", search for and select Alpha Engineer (Source).
   - Click "Create".
 
-Step 2: Navigate to the SSPR Properties Blade
-  - In the left-hand navigation pane, expand the "Protection" dropdown section.
-  - Click directly on "Password reset".
-  - On the "Properties" blade, locate the setting labeled "Self service password 
-    reset enabled".
-  - Change the selection toggle from "All" to "Selected".
-  - Click the "No groups selected" hyperlink, search for "SSPR-Pilot-Group", 
-    select it, and click "Select".
-  - Click "Save" at the top of the blade.
+tep 2: Navigate to the Global SSPR Properties Blade
+Step 2a: Look at the very top left of your screen at the breadcrumb trail (the horizontal navigation path). Click on Microsoft Entra ID to jump completely out of the group and back to the root tenant overview page.
+
+Step 2b: Look at the main left-hand navigation column. Scroll down until you see the Identity category, expand it, and then look for a sub-category named Protection. Expand Protection.
+
+Step 2c: Inside that expanded Protection list, click directly on Password reset.
+
+Step 2d: You will land directly on the global Properties blade. This is where you will see the exact setting we need: "Self service password reset enabled" with the options None, Selected, or All.
 
 Step 3: Configure Authentication Methods Gate
   - In the left menu under the "Password reset" header, click "Authentication methods".
